@@ -2,7 +2,10 @@ import type { AWS } from '@serverless/typescript';
 
 import hello from '@functions/hello';
 import saveData from '@functions/saveData';
-
+import getData from '@functions/getData';
+import getSingleRecord from '@functions/getSIngleRecord';
+import updateData from '@functions/updateData';
+import deleteData from '@functions/deleteData';
 const serverlessConfiguration: AWS = {
 	service: 'serverless-dynamoDB-Zaheer-dev',
 	frameworkVersion: '2',
@@ -37,7 +40,7 @@ const serverlessConfiguration: AWS = {
 	],
 	provider: {
 		name: 'aws',
-    stage: 'test',
+		stage: 'test',
 		runtime: 'nodejs14.x',
 		apiGateway: {
 			minimumCompressionSize: 1024,
@@ -48,30 +51,30 @@ const serverlessConfiguration: AWS = {
 			NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
 		},
 		lambdaHashingVersion: '20201221',
-    iamRoleStatements: [{
-       
-        "Effect": "Allow",
-        "Action": [
-          "dynamodb:Query",
-          "dynamodb:Scan",
-          "dynamodb:GetItem",
-          "dynamodb:PutItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem"
-        ],
-        "Resource": "arn:aws:dynamodb:us-west-2:218767131295:table/Customer"
-      }
-    ]
+		iamRoleStatements: [
+			{
+				'Effect': 'Allow',
+				'Action': ['dynamodb:*'],
+				'Resource': 'arn:aws:dynamodb:us-west-2:218767131295:table/Customer2',
+			},
+		],
 	},
 	// import the function via paths
-	functions: { hello, saveData },
+	functions: {
+		hello,
+		saveData,
+		getData,
+		getSingleRecord,
+		updateData,
+		deleteData,
+	},
 
 	resources: {
 		Resources: {
 			customer: {
 				Type: 'AWS::DynamoDB::Table',
 				Properties: {
-					TableName: 'Customer',
+					TableName: 'Customer2',
 					AttributeDefinitions: [
 						{
 							AttributeName: 'CustomerName',

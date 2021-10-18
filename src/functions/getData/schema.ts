@@ -1,8 +1,5 @@
 export default {
 	type: 'object',
-	properties: {
-		CustomerName: { type: 'string' },
-		CustomerAddress: { type: 'string' },
-	},
+	properties: {},
 	// required: ['CustomerName', 'CustomerAddress']
 } as const;

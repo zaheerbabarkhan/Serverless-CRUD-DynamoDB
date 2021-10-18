@@ -4,7 +4,7 @@ import { middyfy } from '@libs/lambda';
 const { dynamoDB } = require('../../../src');
 import schema from './schema';
 
-const saveData: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
+const updateData: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
 	event
 ) => {
 	const params = {
@@ -12,6 +12,7 @@ const saveData: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
 		Item: {
 			CustomerName: event.body.CustomerName,
 			CustomerAddress: event.body.CustomerAddress,
+			CustomerPhone: event.body.CustomerPhone,
 		},
 	};
 	const result = await save(params);
@@ -38,4 +39,4 @@ const save = async (params) => {
 	});
 };
 
-export const main = middyfy(saveData);
+export const main = middyfy(updateData);

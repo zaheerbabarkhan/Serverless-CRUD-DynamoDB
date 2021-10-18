@@ -3,6 +3,7 @@ export default {
 	properties: {
 		CustomerName: { type: 'string' },
 		CustomerAddress: { type: 'string' },
+		CustomerPhone: { type: 'string' },
 	},
-	// required: ['CustomerName', 'CustomerAddress']
+	required: ['CustomerName', 'CustomerAddress', 'CustomerPhone'],
 } as const;

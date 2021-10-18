@@ -1226,7 +1226,7 @@ var require_src = __commonJS({
   }
 });
 
-// src/functions/saveData/handler.ts
+// src/functions/updateData/handler.ts
 __export(exports, {
   main: () => main
 });
@@ -1246,14 +1246,15 @@ var middyfy = (handler) => {
   return (0, import_core.default)(handler).use((0, import_http_json_body_parser.default)());
 };
 
-// src/functions/saveData/handler.ts
+// src/functions/updateData/handler.ts
 var { dynamoDB } = require_src();
-var saveData = async (event) => {
+var updateData = async (event) => {
   const params = {
     TableName: "Customer2",
     Item: {
       CustomerName: event.body.CustomerName,
-      CustomerAddress: event.body.CustomerAddress
+      CustomerAddress: event.body.CustomerAddress,
+      CustomerPhone: event.body.CustomerPhone
     }
   };
   const result = await save(params);
@@ -1270,7 +1271,7 @@ var save = async (params) => {
     });
   });
 };
-var main = middyfy(saveData);
+var main = middyfy(updateData);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   main

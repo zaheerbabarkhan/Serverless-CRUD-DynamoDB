@@ -1226,7 +1226,7 @@ var require_src = __commonJS({
   }
 });
 
-// src/functions/saveData/handler.ts
+// src/functions/getSIngleRecord/handler.ts
 __export(exports, {
   main: () => main
 });
@@ -1246,31 +1246,28 @@ var middyfy = (handler) => {
   return (0, import_core.default)(handler).use((0, import_http_json_body_parser.default)());
 };
 
-// src/functions/saveData/handler.ts
+// src/functions/getSIngleRecord/handler.ts
 var { dynamoDB } = require_src();
-var saveData = async (event) => {
+var getSingleRecord = async (event) => {
   const params = {
     TableName: "Customer2",
-    Item: {
-      CustomerName: event.body.CustomerName,
-      CustomerAddress: event.body.CustomerAddress
+    Key: {
+      CustomerName: JSON.parse(event.body).CustomerName
     }
   };
-  const result = await save(params);
-  return formatJSONResponse({
-    message: result
-  });
-};
-var save = async (params) => {
-  return new Promise((resolve, reject) => {
-    dynamoDB.put(params).promise().then((result) => {
-      resolve(result);
-    }).catch((err) => {
-      reject(err);
+  try {
+    const result = await dynamoDB.get(params).promise();
+    return formatJSONResponse({
+      message: result
     });
-  });
+  } catch (error) {
+    console.log("error");
+    return formatJSONResponse({
+      message: error
+    });
+  }
 };
-var main = middyfy(saveData);
+var main = middyfy(getSingleRecord);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   main
