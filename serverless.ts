@@ -55,7 +55,7 @@ const serverlessConfiguration: AWS = {
 			{
 				'Effect': 'Allow',
 				'Action': ['dynamodb:*'],
-				'Resource': 'arn:aws:dynamodb:us-west-2:218767131295:table/Customer2',
+				'Resource': '*',
 			},
 		],
 	},

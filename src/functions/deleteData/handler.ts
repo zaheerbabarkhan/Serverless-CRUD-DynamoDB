@@ -1,12 +1,10 @@
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
+// import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
+import { Handler } from 'aws-lambda';
 const { dynamoDB } = require('../../../src');
-import schema from './schema';
 
-const deleteRecord: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
-	event
-) => {
+export const deleteRecord: Handler = async (event) => {
 	console.log(event.body);
 	const params = {
 		TableName: 'Customer2',
@@ -16,9 +14,9 @@ const deleteRecord: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
 	};
 
 	try {
-		const result = await dynamoDB.delete(params).promise();
+		await dynamoDB.delete(params).promise();
 		return formatJSONResponse({
-			message: result,
+			message: 'success',
 		});
 	} catch (error) {
 		console.log('error');
